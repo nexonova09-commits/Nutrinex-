@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriNex - Nutrition Intelligente</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/splash.css">
+    <link rel="stylesheet" href="styles/auth.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/scanner.css">
+    <link rel="stylesheet" href="styles/journal.css">
+    <link rel="stylesheet" href="styles/stats.css">
+    <link rel="stylesheet" href="styles/profile.css">
+    <link rel="stylesheet" href="styles/premium.css">
+    <link rel="stylesheet" href="styles/chat.css">
+    <link rel="stylesheet" href="styles/community.css">
+    <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="screen">
+        <div class="splash-container">
+            <div class="splash-logo">
+                <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" stroke="url(#gradient)" stroke-width="3"/>
+                    <path d="M35 55 Q50 40 65 55" stroke="url(#gradient)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <circle cx="40" cy="45" r="4" fill="url(#gradient)"/>
+                    <circle cx="60" cy="45" r="4" fill="url(#gradient)"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="splash-title">NutriNex</h1>
+            <p class="splash-subtitle">Votre nutrition intelligente</p>
+            <div class="splash-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentification -->
+    <div id="auth-screen" class="screen hidden">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" stroke="#10b981" stroke-width="3"/>
+                    <path d="M35 55 Q50 40 65 55" stroke="#10b981" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Bienvenue</h2>
+            
+            <div id="auth-tabs" class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Connexion</button>
+                <button class="tab-btn" data-tab="signup">Inscription</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="vous@exemple.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Mot de passe</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Se connecter</button>
+                <p class="auth-link"><a href="#" onclick="resetPassword(event)">Mot de passe oublié ?</a></p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="signup-name">Nom complet</label>
+                    <input type="text" id="signup-name" placeholder="Jean Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="vous@exemple.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Mot de passe</label>
+                    <input type="password" id="signup-password" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-age">Âge</label>
+                    <input type="number" id="signup-age" placeholder="25" min="13" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-goal">Objectif</label>
+                    <select id="signup-goal" required>
+                        <option value="">Sélectionnez un objectif</option>
+                        <option value="weight_loss">Perte de poids</option>
+                        <option value="muscle_gain">Prise de muscle</option>
+                        <option value="health">Santé générale</option>
+                        <option value="athletic">Performance athlétique</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <div class="header-top">
+                    <h1>Aujourd'hui</h1>
+                    <button class="btn-icon" onclick="openNotifications()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="date-display" id="date-display">27 juin 2026</div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Calories Circle -->
+                <div class="calories-card">
+                    <div class="circle-progress">
+                        <svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="54" class="circle-bg"/>
+                            <circle cx="60" cy="60" r="54" class="circle-progress-bar" id="circle-progress"/>
+                        </svg>
+                        <div class="circle-text">
+                            <div class="circle-value" id="calories-consumed">0</div>
+                            <div class="circle-label">/ <span id="calories-goal">2000</span> kcal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Macros Card -->
+                <div class="card macros-card">
+                    <div class="card-title">Macronutriments</div>
+                    <div class="macros-grid">
+                        <div class="macro-item">
+                            <div class="macro-circle protein">
+                                <span id="protein-val">0</span>g
+                            </div>
+                            <div class="macro-name">Protéines</div>
+                            <div class="macro-percent"><span id="protein-percent">0</span>%</div>
+                        </div>
+                        <div class="macro-item">
+                            <div class="macro-circle carbs">
+                                <span id="carbs-val">0</span>g
+                            </div>
+                            <div class="macro-name">Glucides</div>
+                            <div class="macro-percent"><span id="carbs-percent">0</span>%</div>
+                        </div>
+                        <div class="macro-item">
+                            <div class="macro-circle fats">
+                                <span id="fats-val">0</span>g
+                            </div>
+                            <div class="macro-name">Lipides</div>
+                            <div class="macro-percent"><span id="fats-percent">0</span>%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Meals -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Repas récents</h3>
+                        <a href="#" onclick="goToScreen('journal-screen', event)">Voir tout</a>
+                    </div>
+                    <div id="recent-meals" class="meals-list">
+                        <p class="empty-state">Aucun repas aujourd'hui</p>
+                    </div>
+                </div>
+
+                <!-- Water Intake -->
+                <div class="card water-card">
+                    <div class="card-title">Hydratation</div>
+                    <div class="water-display">
+                        <div class="water-cups">
+                            <div id="water-value">0</div>
+                            <div class="water-unit">/ 8 verres</div>
+                        </div>
+                        <div class="water-buttons">
+                            <button class="btn btn-small" onclick="addWater()">+ 1 verre</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scanner Screen -->
+    <div id="scanner-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('dashboard-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>Scanner</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="scanner-content">
+                <div class="scanner-frame">
+                    <video id="scanner-video" autoplay playsinline></video>
+                    <div class="scanner-overlay">
+                        <div class="scanner-corner top-left"></div>
+                        <div class="scanner-corner top-right"></div>
+                        <div class="scanner-corner bottom-left"></div>
+                        <div class="scanner-corner bottom-right"></div>
+                    </div>
+                </div>
+                <p class="scanner-info">Positionnez le code-barres dans le cadre</p>
+                
+                <div class="scanner-actions">
+                    <button class="btn btn-secondary" onclick="toggleFlash()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M13 2H3v8h10V2zM11 10H5V4h6v6z" stroke-width="2"/>
+                            <path d="M20 2v8h-4V2h4z" stroke-width="2"/>
+                        </svg>
+                        Flash
+                    </button>
+                    <button class="btn btn-secondary" onclick="uploadImage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Galerie
+                    </button>
+                </div>
+
+                <div id="scanner-result" class="hidden">
+                    <div class="result-card">
+                        <h3 id="result-name">Produit trouvé</h3>
+                        <div class="result-content">
+                            <img id="result-image" src="" alt="Produit" class="result-image">
+                            <div class="result-info">
+                                <p><strong>Code:</strong> <span id="result-barcode"></span></p>
+                                <p><strong>Marque:</strong> <span id="result-brand"></span></p>
+                                <p><strong>Calories:</strong> <span id="result-calories"></span> kcal</p>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="btn btn-primary btn-full" onclick="addMealFromScan()">Ajouter à mon journal</button>
+                            <button class="btn btn-secondary btn-full" onclick="closeScanResult()">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Journal Alimentaire -->
+    <div id="journal-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('dashboard-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>Journal</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="journal-content">
+                <div class="journal-date-picker">
+                    <button onclick="previousDay()">‹</button>
+                    <span id="journal-date">Aujourd'hui</span>
+                    <button onclick="nextDay()">›</button>
+                </div>
+
+                <div class="journal-sections">
+                    <!-- Petit-déjeuner -->
+                    <div class="meal-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>🌅 Petit-déjeuner</h3>
+                            <span class="section-cals" id="breakfast-cals">0 kcal</span>
+                        </div>
+                        <div class="section-content">
+                            <div id="breakfast-items" class="meal-items"></div>
+                            <button class="btn btn-add-meal" onclick="addMeal('breakfast')">+ Ajouter</button>
+                        </div>
+                    </div>
+
+                    <!-- Déjeuner -->
+                    <div class="meal-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>🌞 Déjeuner</h3>
+                            <span class="section-cals" id="lunch-cals">0 kcal</span>
+                        </div>
+                        <div class="section-content">
+                            <div id="lunch-items" class="meal-items"></div>
+                            <button class="btn btn-add-meal" onclick="addMeal('lunch')">+ Ajouter</button>
+                        </div>
+                    </div>
+
+                    <!-- Goûter -->
+                    <div class="meal-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>🍴 Goûter</h3>
+                            <span class="section-cals" id="snack-cals">0 kcal</span>
+                        </div>
+                        <div class="section-content">
+                            <div id="snack-items" class="meal-items"></div>
+                            <button class="btn btn-add-meal" onclick="addMeal('snack')">+ Ajouter</button>
+                        </div>
+                    </div>
+
+                    <!-- Dîner -->
+                    <div class="meal-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>🌙 Dîner</h3>
+                            <span class="section-cals" id="dinner-cals">0 kcal</span>
+                        </div>
+                        <div class="section-content">
+                            <div id="dinner-items" class="meal-items"></div>
+                            <button class="btn btn-add-meal" onclick="addMeal('dinner')">+ Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Summary -->
+                <div class="card daily-summary">
+                    <h3>Résumé du jour</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-value" id="journal-total-cals">0</div>
+                            <div class="summary-label">kcal</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-value" id="journal-total-protein">0</div>
+                            <div class="summary-label">g protéines</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-value" id="journal-total-carbs">0</div>
+                            <div class="summary-label">g glucides</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-value" id="journal-total-fats">0</div>
+                            <div class="summary-label">g lipides</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div id="stats-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('dashboard-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>Statistiques</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="stats-content">
+                <div class="stats-period">
+                    <button class="period-btn active" data-period="week">Semaine</button>
+                    <button class="period-btn" data-period="month">Mois</button>
+                    <button class="period-btn" data-period="year">Année</button>
+                </div>
+
+                <!-- Calories Chart -->
+                <div class="card">
+                    <h3>Calories consommées</h3>
+                    <div class="chart-container">
+                        <canvas id="calories-chart"></canvas>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat-item">
+                            <span>Moyenne:</span>
+                            <strong id="avg-calories">0</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Max:</span>
+                            <strong id="max-calories">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weight Chart -->
+                <div class="card">
+                    <h3>Poids</h3>
+                    <div class="chart-container">
+                        <canvas id="weight-chart"></canvas>
+                    </div>
+                    <div class="chart-stats">
+                        <div class="stat-item">
+                            <span>Actuel:</span>
+                            <strong id="current-weight">0</strong> kg
+                        </div>
+                        <div class="stat-item">
+                            <span>Objectif:</span>
+                            <strong id="goal-weight">0</strong> kg
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Macros Distribution -->
+                <div class="card">
+                    <h3>Distribution macros (moyenne)</h3>
+                    <div class="chart-container">
+                        <canvas id="macros-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Streaks -->
+                <div class="card">
+                    <h3>Vos statistiques</h3>
+                    <div class="stats-list">
+                        <div class="stat-row">
+                            <span>🔥 Jours consécutifs</span>
+                            <strong id="streak-days">0</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>✅ Jours atteint l'objectif</span>
+                            <strong id="goal-days">0</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>⏰ Temps moyen de journalisation</span>
+                            <strong id="avg-time">--</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profil -->
+    <div id="profile-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('dashboard-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>Profil</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="profile-content">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M12 14c-6 0-8 3-8 3v3h16v-3s-2-3-8-3z"/>
+                        </svg>
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="profile-name">Utilisateur</h2>
+                        <p id="profile-email">email@exemple.com</p>
+                    </div>
+                </div>
+
+                <!-- Profile Stats -->
+                <div class="card profile-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Poids</div>
+                        <input type="number" id="profile-weight" placeholder="70" class="stat-input">
+                        <span class="stat-unit">kg</span>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Taille</div>
+                        <input type="number" id="profile-height" placeholder="180" class="stat-input">
+                        <span class="stat-unit">cm</span>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Âge</div>
+                        <input type="number" id="profile-age" placeholder="25" class="stat-input">
+                        <span class="stat-unit">ans</span>
+                    </div>
+                </div>
+
+                <!-- Preferences -->
+                <div class="card">
+                    <h3>Préférences</h3>
+                    <div class="preference-group">
+                        <label>Objectif calorique quotidien</label>
+                        <div class="input-group">
+                            <input type="number" id="profile-calories" placeholder="2000" min="1000" max="5000">
+                            <span>kcal</span>
+                        </div>
+                    </div>
+                    <div class="preference-group">
+                        <label>Régime alimentaire</label>
+                        <select id="profile-diet">
+                            <option value="omnivore">Omnivore</option>
+                            <option value="vegetarian">Végétarien</option>
+                            <option value="vegan">Végétalien</option>
+                            <option value="gluten-free">Sans gluten</option>
+                            <option value="keto">Cétogène</option>
+                        </select>
+                    </div>
+                    <div class="preference-group">
+                        <label>Sexe</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gender" value="male"> Homme</label>
+                            <label><input type="radio" name="gender" value="female"> Femme</label>
+                            <label><input type="radio" name="gender" value="other"> Autre</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Settings -->
+                <div class="card">
+                    <h3>Notifications</h3>
+                    <div class="toggle-group">
+                        <div class="toggle-item">
+                            <span>Rappels de repas</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notif-meals" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <span>Messages NOVA</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notif-nova" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <span>Communauté</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notif-community" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <button class="btn btn-primary btn-full" onclick="saveProfile()">Enregistrer les modifications</button>
+                <button class="btn btn-secondary btn-full" onclick="goToPremium()">Passer à Premium</button>
+                <button class="btn btn-danger btn-full" onclick="logout()">Se déconnecter</button>
+
+                <!-- Admin Link (hidden for most users) -->
+                <div id="admin-link-container" style="display:none; margin-top: 20px;">
+                    <button class="btn btn-admin btn-full" onclick="goToScreen('admin-screen')">🔒 Admin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium -->
+    <div id="premium-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('profile-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>NutriNex Premium</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="premium-content">
+                <div class="premium-header">
+                    <div class="crown-icon">👑</div>
+                    <h2>Débloquez le potentiel complet</h2>
+                    <p>Accédez à toutes les fonctionnalités premium</p>
+                </div>
+
+                <!-- Features List -->
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">🤖</div>
+                        <div class="feature-text">
+                            <h4>IA NOVA Illimitée</h4>
+                            <p>Consultations nutritionnelles illimitées avec notre IA</p>
+                        </div>
+                        <div class="feature-check">✓</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h4>Analyses approfondies</h4>
+                            <p>Rapports détaillés et recommandations personnalisées</p>
+                        </div>
+                        <div class="feature-check">✓</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📸</div>
+                        <div class="feature-text">
+                            <h4>Reconnaissance alimentaire</h4>
+                            <p>Scan ultra-rapide avec reconnaissance par photo</p>
+                        </div>
+                        <div class="feature-check">✓</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-text">
+                            <h4>Communauté Premium</h4>
+                            <p>Accès à un groupe exclusif de passionnés</p>
+                        </div>
+                        <div class="feature-check">✓</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-text">
+                            <h4>Plans de repas personnalisés</h4>
+                            <p>Générés selon vos objectifs et préférences</p>
+                        </div>
+                        <div class="feature-check">✓</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-text">
+                            <h4>App mobile prioritaire</h4>
+                            <p>Accès anticipé aux nouvelles fonctionnalités</p>
+                        </div>
+                        <div class="feature-check">✓</div>
+                    </div>
+                </div>
+
+                <!-- Pricing Plans -->
+                <div class="pricing-plans">
+                    <div class="plan-card">
+                        <div class="plan-period">1 mois</div>
+                        <div class="plan-price">9,99€</div>
+                        <p class="plan-desc">puis 9,99€/mois</p>
+                        <button class="btn btn-primary btn-full" onclick="subscribeToplan('monthly')">S'abonner</button>
+                    </div>
+                    <div class="plan-card featured">
+                        <div class="plan-badge">Meilleure offre</div>
+                        <div class="plan-period">1 an</div>
+                        <div class="plan-price">79,99€</div>
+                        <p class="plan-desc">6,67€/mois</p>
+                        <button class="btn btn-primary btn-full" onclick="subscribeToPlan('yearly')">S'abonner</button>
+                    </div>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="testimonials">
+                    <h3>Ce que disent nos utilisateurs</h3>
+                    <div class="testimonial-item">
+                        <p>"NOVA a complètement changé ma façon de manger. Incroyable!"</p>
+                        <div class="testimonial-author">- Marie, Lyon</div>
+                    </div>
+                    <div class="testimonial-item">
+                        <p>"L'app la plus complète pour le suivi nutritionnel."</p>
+                        <div class="testimonial-author">- Pierre, Paris</div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="premium-footer">
+                    <p>Paiement sécurisé • Annulation anytime • Pas d'engagement</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat NOVA IA -->
+    <div id="chat-screen" class="screen hidden">
+        <div class="app-container chat-container">
+            <header class="app-header chat-header">
+                <button class="btn-icon-back" onclick="goToScreen('dashboard-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="chat-header-info">
+                    <h2>NOVA</h2>
+                    <p class="nova-status">IA Nutritionniste</p>
+                </div>
+                <button class="btn-icon" onclick="openNovaInfo()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                </button>
+            </header>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="message message-bot">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble">
+                        <p>Bonjour ! Je suis NOVA, votre assistante nutritionnelle IA. Comment puis-je vous aider aujourd'hui ?</p>
+                        <span class="message-time">À l'instant</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <input type="text" id="chat-input" class="chat-input" placeholder="Posez une question...">
+                    <button class="btn-icon chat-send-btn" onclick="sendChatMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 C22.9702544,11.6889879 22.9702544,11.6889879 22.9702544,11.6889879 L4.13399899,2.89 C3.34915502,2.4472394 2.40734225,2.52449793 1.77946707,3.0952591 C0.994623095,3.73405349 0.837654326,4.88379948 1.15159189,5.66928042 L3.03521743,12.1102734 C3.03521743,12.2673708 3.19218622,12.4244682 3.50612381,12.4244682 L16.6915026,13.2599618 C16.6915026,13.2599618 17.1624089,13.2599618 17.1624089,12.8488246 L17.1624089,12.0633376 C17.1624089,11.5920454 16.6915026,11.4349479 16.6915026,12.4744748 Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Communauté -->
+    <div id="community-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('dashboard-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>Communauté</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="community-content">
+                <div class="community-tabs">
+                    <button class="tab-btn active" data-tab="feed">Fil</button>
+                    <button class="tab-btn" data-tab="groups">Groupes</button>
+                    <button class="tab-btn" data-tab="challenges">Défis</button>
+                </div>
+
+                <!-- Feed Tab -->
+                <div id="feed-tab" class="tab-content active">
+                    <div class="posts-list">
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div class="post-author">
+                                    <div class="author-avatar">👤</div>
+                                    <div class="author-info">
+                                        <strong>Sophie M.</strong>
+                                        <small>il y a 2h</small>
+                                    </div>
+                                </div>
+                                <button class="btn-icon">⋯</button>
+                            </div>
+                            <div class="post-content">
+                                <p>J'ai perdu 5kg ce mois-ci! Merci NutriNex et NOVA pour les conseils! 💪</p>
+                            </div>
+                            <div class="post-stats">
+                                <span>❤️ 42 j'aime</span>
+                                <span>💬 8 commentaires</span>
+                            </div>
+                        </div>
+
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div class="post-author">
+                                    <div class="author-avatar">👤</div>
+                                    <div class="author-info">
+                                        <strong>Marc D.</strong>
+                                        <small>il y a 5h</small>
+                                    </div>
+                                </div>
+                                <button class="btn-icon">⋯</button>
+                            </div>
+                            <div class="post-content">
+                                <p>Qui a une bonne recette de petit-déj sans gluten? 🥐</p>
+                            </div>
+                            <div class="post-stats">
+                                <span>❤️ 18 j'aime</span>
+                                <span>💬 12 commentaires</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Groups Tab -->
+                <div id="groups-tab" class="tab-content hidden">
+                    <div class="groups-list">
+                        <div class="group-card">
+                            <div class="group-icon">🏃</div>
+                            <h4>Perte de poids</h4>
+                            <p>Groupe de 5234 membres</p>
+                            <button class="btn btn-small" onclick="joinGroup('weight-loss')">Rejoindre</button>
+                        </div>
+                        <div class="group-card">
+                            <div class="group-icon">💪</div>
+                            <h4>Musculation & Nutrition</h4>
+                            <p>Groupe de 3421 membres</p>
+                            <button class="btn btn-small" onclick="joinGroup('muscle')">Rejoindre</button>
+                        </div>
+                        <div class="group-card">
+                            <div class="group-icon">🥗</div>
+                            <h4>Régime Vegan</h4>
+                            <p>Groupe de 1892 membres</p>
+                            <button class="btn btn-small" onclick="joinGroup('vegan')">Rejoindre</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenges Tab -->
+                <div id="challenges-tab" class="tab-content hidden">
+                    <div class="challenges-list">
+                        <div class="challenge-card">
+                            <div class="challenge-header">
+                                <h4>30 jours sans sucre</h4>
+                                <span class="badge">En cours</span>
+                            </div>
+                            <p>Rejoignez 2345 personnes</p>
+                            <div class="challenge-progress">
+                                <div class="progress-bar" style="width: 65%"></div>
+                            </div>
+                            <button class="btn btn-primary btn-full" onclick="joinChallenge('no-sugar')">Participer</button>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-header">
+                                <h4>Boire 2L d'eau par jour</h4>
+                                <span class="badge">Bientôt</span>
+                            </div>
+                            <p>Avec 1523 amis</p>
+                            <button class="btn btn-secondary btn-full" onclick="joinChallenge('water')">S'inscrire</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-screen" class="screen hidden">
+        <div class="app-container">
+            <header class="app-header">
+                <button class="btn-icon-back" onclick="goToScreen('profile-screen')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <h1>Admin Panel</h1>
+                <div style="width: 24px;"></div>
+            </header>
+
+            <div class="admin-content">
+                <div class="admin-section">
+                    <h2>🔒 Panneau d'Administration</h2>
+                    <p class="admin-warning">Réservé à l'administrateur: Youssef Sylla</p>
+                </div>
+
+                <!-- User Management -->
+                <div class="card">
+                    <h3>Gestion des utilisateurs</h3>
+                    <div class="admin-stats">
+                        <div class="admin-stat">
+                            <div class="stat-number" id="admin-total-users">0</div>
+                            <div class="stat-label">Utilisateurs totaux</div>
+                        </div>
+                        <div class="admin-stat">
+                            <div class="stat-number" id="admin-premium-users">0</div>
+                            <div class="stat-label">Premium actifs</div>
+                        </div>
+                        <div class="admin-stat">
+                            <div class="stat-number" id="admin-today-signups">0</div>
+                            <div class="stat-label">Inscriptions aujourd'hui</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="card">
+                    <h3>État du système</h3>
+                    <div class="status-list">
+                        <div class="status-item">
+                            <span>🗄️ Base de données</span>
+                            <span class="status-badge online">En ligne</span>
+                        </div>
+                        <div class="status-item">
+                            <span>🤖 API NOVA</span>
+                            <span class="status-badge online">En ligne</span>
+                        </div>
+                        <div class="status-item">
+                            <span>🍽️ API Nutrition</span>
+                            <span class="status-badge online">En ligne</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Actions -->
+                <div class="card">
+                    <h3>Activités récentes</h3>
+                    <div class="actions-list" id="recent-actions">
+                        <p class="empty-state">Aucune activité</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <h3>Actions rapides</h3>
+                    <button class="btn btn-primary btn-full" onclick="viewAllUsers()">Voir tous les utilisateurs</button>
+                    <button class="btn btn-secondary btn-full" onclick="viewAnalytics()">Voir les analytics</button>
+                    <button class="btn btn-danger btn-full" onclick="checkSystemHealth()">Vérifier la santé du système</button>
+                </div>
+
+                <div class="admin-footer">
+                    <small>Dernière mise à jour: <span id="last-update">--:--</span></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" id="bottom-nav">
+        <button class="nav-item active" onclick="goToScreen('dashboard-screen')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span>Accueil</span>
+        </button>
+        <button class="nav-item" onclick="goToScreen('journal-screen')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7h-3v3h3v-3zm0-4h-3v3h3V8z"/>
+            </svg>
+            <span>Journal</span>
+        </button>
+        <button class="nav-item" onclick="goToScreen('scanner-screen')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 11h8V3H3v8zm0 8h8v-8H3v8zm10 0h8V11h-8v8zm0-18v8h8V3h-8z"/>
+            </svg>
+            <span>Scanner</span>
+        </button>
+        <button class="nav-item" onclick="goToScreen('chat-screen')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+            <span>NOVA</span>
+        </button>
+        <button class="nav-item" onclick="goToScreen('profile-screen')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <span>Profil</span>
+        </button>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/deepseek.js"></script>
+    <script src="js/nutrition-api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/scanner.js"></script>
+    <script src="js/journal.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/premium.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/community.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
