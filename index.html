@@ -960,16 +960,16 @@
     <script src="js/community.js"></script>
     <script src="js/admin.js"></script>
     
-    <!-- Function pour démarrer l'app -->
+    <!-- Fonction pour démarrer l'app depuis le bouton Commencer -->
     <script>
         function startApp() {
-            // Vérifier si l'utilisateur est connecté
-            if (localStorage.getItem('user')) {
-                goToScreen('dashboard-screen');
-            } else {
-                goToScreen('auth-screen');
-            }
+            console.log('Bouton Commencer cliqué'); // Debug
+            // Rediriger directement à l'écran d'authentification
+            goToScreen('auth-screen');
         }
+        
+        // Exposer startApp au scope global
+        window.startApp = startApp;
     </script>
 </body>
 </html>
