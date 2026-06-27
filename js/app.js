@@ -19,9 +19,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function initApp() {
     loadLocalData();
-    checkAuth();
     setupEventListeners();
     animateSplash();
+    
+    // Splash screen -> Auth/Dashboard après 2.5 secondes
+    setTimeout(() => {
+        checkAuth();
+    }, 2500);
 }
 
 function loadLocalData() {
@@ -60,20 +64,22 @@ function getDateString(date) {
 }
 
 function setupEventListeners() {
-    // Auth tabs
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const tabs = e.target.parentElement.querySelectorAll('.tab-btn');
-            tabs.forEach(t => t.classList.remove('active'));
-            e.target.classList.add('active');
-            
-            const tabName = e.target.dataset.tab;
-            document.querySelectorAll('.auth-form').forEach(form => {
-                form.classList.add('hidden');
+    // Auth tabs - Only for auth-tabs, not all tab-btn
+    const authTabs = document.querySelector('#auth-tabs');
+    if (authTabs) {
+        authTabs.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                authTabs.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                const tabName = e.target.dataset.tab;
+                document.querySelectorAll('.auth-form').forEach(form => {
+                    form.classList.add('hidden');
+                });
+                document.getElementById(`${tabName}-form`).classList.remove('hidden');
             });
-            document.getElementById(`${tabName}-form`).classList.remove('hidden');
         });
-    });
+    }
 
     // Login form
     document.getElementById('login-form')?.addEventListener('submit', handleLogin);
@@ -109,13 +115,9 @@ function setupEventListeners() {
 
 function checkAuth() {
     if (currentUser) {
-        setTimeout(() => {
-            goToScreen('dashboard-screen');
-        }, 3000);
+        goToScreen('dashboard-screen');
     } else {
-        setTimeout(() => {
-            goToScreen('auth-screen');
-        }, 3000);
+        goToScreen('auth-screen');
     }
 }
 
@@ -129,40 +131,27 @@ function goToScreen(screenId, event) {
     document.getElementById(screenId).classList.remove('hidden');
     
     // Update nav
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+    
     if (screenId === 'dashboard-screen') {
-        updateNav('nav-0');
-    } else if (screenId === 'journal-screen') {
-        updateNav('nav-1');
-    } else if (screenId === 'scanner-screen') {
-        updateNav('nav-2');
-    } else if (screenId === 'chat-screen') {
-        updateNav('nav-3');
-    } else if (screenId === 'profile-screen') {
-        updateNav('nav-4');
-    }
-
-    // Handle specific screens
-    if (screenId === 'dashboard-screen') {
+        if (navItems[0]) navItems[0].classList.add('active');
         updateDashboard();
     } else if (screenId === 'journal-screen') {
+        if (navItems[1]) navItems[1].classList.add('active');
         updateJournal();
+    } else if (screenId === 'scanner-screen') {
+        if (navItems[2]) navItems[2].classList.add('active');
+    } else if (screenId === 'chat-screen') {
+        if (navItems[3]) navItems[3].classList.add('active');
     } else if (screenId === 'profile-screen') {
+        if (navItems[4]) navItems[4].classList.add('active');
         loadProfileData();
     } else if (screenId === 'stats-screen') {
         initializeStats();
     } else if (screenId === 'admin-screen') {
         loadAdminData();
     }
-}
-
-function updateNav(activeIndex) {
-    document.querySelectorAll('.nav-item').forEach((item, index) => {
-        if (index === parseInt(activeIndex.split('-')[1])) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
 }
 
 function animateSplash() {
