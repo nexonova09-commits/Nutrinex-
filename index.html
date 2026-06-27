@@ -42,6 +42,7 @@
                 <div class="dot"></div>
                 <div class="dot"></div>
             </div>
+            <button class="btn btn-primary btn-full splash-btn" onclick="startApp()">Commencer</button>
         </div>
     </div>
 
@@ -703,7 +704,7 @@
                     <input type="text" id="chat-input" class="chat-input" placeholder="Posez une question...">
                     <button class="btn-icon chat-send-btn" onclick="sendChatMessage()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 C22.9702544,11.6889879 22.9702544,11.6889879 22.9702544,11.6889879 L4.13399899,2.89 C3.34915502,2.4472394 2.40734225,2.52449793 1.77946707,3.0952591 C0.994623095,3.73405349 0.837654326,4.88379948 1.15159189,5.66928042 L3.03521743,12.1102734 C3.03521743,12.2673708 3.19218622,12.4244682 3.50612381,12.4244682 L16.6915026,13.2599618 C16.6915026,13.2599618 17.1624089,13.2599618 17.1624089,12.8488246 L17.1624089,12.0633376 C17.1624089,11.5920454 16.6915026,11.4349479 16.6915026,12.4744748 Z"/>
+                            <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 [...]
                         </svg>
                     </button>
                 </div>
@@ -958,5 +959,17 @@
     <script src="js/chat.js"></script>
     <script src="js/community.js"></script>
     <script src="js/admin.js"></script>
+    
+    <!-- Function pour démarrer l'app -->
+    <script>
+        function startApp() {
+            // Vérifier si l'utilisateur est connecté
+            if (localStorage.getItem('user')) {
+                goToScreen('dashboard-screen');
+            } else {
+                goToScreen('auth-screen');
+            }
+        }
+    </script>
 </body>
 </html>
